@@ -25,18 +25,5 @@ pipeline {
                  }
             }
         }
-       stage('Deploy'){
-           steps{
-                   sh 'docker run -itd --name healthimg -p 8090:8090 balu777kb/healthimgbook'
-               }
-          }    
-        } 
-           post{
-              success{
-                  echo 'Pipeline successfully executed!'
-              }
-            failure{
-                 echo 'Pipeline failed'
-          }
-   }
-}       
+       }
+}
