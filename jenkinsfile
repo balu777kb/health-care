@@ -37,6 +37,6 @@ pipeline{
              steps{
               sh 'docker run -dt -p 8093:8093 --name c99 image'
                 }
-         }
+            }
     }
 }
