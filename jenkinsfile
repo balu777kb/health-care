@@ -22,8 +22,8 @@ pipeline {
         }
         stage('push image') {
             steps{
-                sh 'docker tag demo balu777kb/demo'
-                sh 'docker push balu777kb/demo .'
+                sh 'docker tag demo balu777kb/demo1'
+                sh 'docker push balu777kb/demo1'
             }
         }
 }
