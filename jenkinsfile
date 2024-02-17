@@ -11,37 +11,6 @@ pipeline {
                 sh "mvn clean package"
             }
         }
-        stage('Build docker image') {
-            steps {
-                script{
-                    sh 'docker build -t balu777kb/medicureimg .'
-                    sh 'docker images'
-            }
-        }
     }
-
-        stage('Docker login and push') {
-          steps {
-             withCredentials([usernamePassword(credentialsId: 'dockerhub', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
-                 sh "echo $PASS | docker login -u $USER --password-stdin"
-                 sh 'docker push balu777kb/medicureimg'
-
-             sh 'docker push medicureimg/medicureimgaddbook:latest'
-                }
-            }
-        }
-        stage('Deploy') {
-            steps {
-                    sh 'docker run -itd --name medicure -p 80:8082 medicureimg/medicureimgaddbook:latest'
-                }
-            }
-    }
-        post {
-            success {
-                echo 'Pipeline successfully executed!'
-            }
-            failure {
-                echo 'Pipeline failed!'
-            }
-        }
 }
+        
