@@ -1,22 +1,30 @@
 pipeline {
     agent any
+
+    environment {
+        DOCKER_CREDENTIALS = credentials('docker')
+        DOCKER_IMAGE = 'balu777kb/image'
+    }
+
     stages {
-        stage('git cloned') {
+        stage('Build Docker Image') {
             steps {
-                git url: 'https://github.com/balu777kb/health-care.git', branch: "master"
+                script {
+                    docker.withRegistry('https://registry.hub.docker.com', DOCKER_CREDENTIALS) {
+                        def customImage = docker.build(DOCKER_IMAGE)
+                    }
+                }
             }
         }
-        stage('Build') {
+
+        stage('Push Docker Image') {
             steps {
-                sh "mvn clean package"
+                script {
+                    docker.withRegistry('https://registry.hub.docker.com', DOCKER_CREDENTIALS) {
+                        customImage.push()
+                    }
+                }
             }
         }
-      stage('Docker login and push'){
-          steps{
-             withCredentials([usernamePassword(CredentialsId: 'docker',passwordVariable: 'PASS',usernameVariable: 'USER')]){
-                 sh "echo \$PASS | docker login -u \$USER --password-stdin"
-                 }
-            }
-        }
-       }
+    }
 }
