@@ -9,6 +9,11 @@ pipeline {
             git 'https://github.com/balu777kb/health-care.git'
             }
         }
+        stage('Build') {
+            steps {
+                sh "mvn clean package"
+            }
+        }
 
         stage('Build docker image') {
             steps {  
