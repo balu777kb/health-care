@@ -20,10 +20,11 @@ pipeline {
         }
 
         stage('Docker login and push') {
-            steps {
-             sh'DOCKER_USERNAME=balu777kb'
-             sh'DOCKER_PASSWORD=9705979634'
-             sh'echo 9705979634@kB | docker login --username balu777kb --password-stdin
+          steps {
+             withCredentials([usernamePassword(credentialsId: 'dockerhub-pwd', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
+                 sh "echo $PASS | docker login -u $USER --password-stdin"
+                 sh 'docker push balu777kb/myimg:v1'
+
              sh 'docker push myimage/medicureimgaddbook:latest'
                 }
             }
