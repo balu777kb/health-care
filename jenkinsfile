@@ -21,9 +21,10 @@ pipeline {
 
         stage('Docker login and push') {
             steps {
-                withCredentials([usernamePassword(credentialsId: 'balu777kb', passwordVariable: '9705979634@kB', usernameVariable: 'USER')]) {
-                    sh "echo \$PASS | docker login -u \$USER --password-stdin"
-                    sh 'docker push myimage/medicureimgaddbook:latest'
+             sh'DOCKER_USERNAME=balu777kb'
+             sh'DOCKER_PASSWORD=9705979634'
+             sh'echo 9705979634@kB | docker login --username balu777kb
+            sh 'docker push myimage/medicureimgaddbook:latest'
                 }
             }
         }
