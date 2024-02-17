@@ -17,7 +17,7 @@ pipeline {
 
         stage('Build docker image') {
             steps {  
-                sh 'docker build -t balu777kb/src:$BUILD_NUMBER .'
+                sh 'docker build -t balu777kb/demo:latest.'
             }
         }
         stage('login to dockerhub') {
@@ -27,8 +27,8 @@ pipeline {
         }
         stage('push image') {
             steps{
-                sh 'docker tag demo balu777kb/demo1'
-                sh 'docker push balu777kb/demo1'
+                sh 'docker tag demo balu777kb/demo1:latest'
+                sh 'docker push balu777kb/demo1:latest'
             }
         }
 }
