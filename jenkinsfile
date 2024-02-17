@@ -30,13 +30,8 @@ pipeline{
         }
         stage('run dockerfile'){
             steps{
-                sh 'docker build -t image .'
+                sh 'docker build -t images .'
              }
         }
-        stage('port expose'){
-             steps{
-              sh 'docker run -dt -p 8029:8029 --name c105 image'
-                }
-            }
     }
 }
