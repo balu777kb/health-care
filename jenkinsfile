@@ -17,7 +17,7 @@ pipeline {
 
         stage('Build docker image') {
             steps {  
-                sh 'docker build -t balu777kb/demo .'
+                sh 'docker build -t demo .'
                 sh 'docker tag demo:latest balu777kb/demo1:latest'
             }
         }
