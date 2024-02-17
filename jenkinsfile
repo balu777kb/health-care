@@ -33,10 +33,6 @@ pipeline{
                 sh 'docker build -t image .'
              }
         }
-        stage('port expose'){
-             steps{
-              sh 'docker run -dt -p 8092:8092 --name c24 image'
-            }
-        }
+        
     }
 }
