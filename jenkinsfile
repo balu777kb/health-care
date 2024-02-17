@@ -1,8 +1,7 @@
 pipeline {
     agent any
-    
     stages {
-        stage('Checkout') {
+        stage('git cloned') {
             steps {
                 git url: 'https://github.com/balu777kb/health-care.git', branch: "master"
             }
@@ -12,26 +11,28 @@ pipeline {
                 sh "mvn clean package"
             }
         }
-        stage('Build Image') {
+        stage('Build docker image') {
             steps {
-                sh 'docker build -t medicureimg .'
-                sh 'docker tag medicureimg:latest myimage/medicureimgaddbook:latest'
+                script{
+                    sh 'docker build -t balu777kb/medicureimg .'
+                    sh 'docker images'
             }
         }
+    }
 
         stage('Docker login and push') {
           steps {
-             withCredentials([usernamePassword(credentialsId: 'dockerhub-pwd', passwordVariable: 'dckr_pat_2RXX5Ua4CP_kG7h6S7LEcw9D1X8', usernameVariable: 'USER')]) {
-                 sh "echo $PASS | docker login -u balu777kb --password-stdin"
-                 sh 'docker push balu777kb/myimg:v1'
+             withCredentials([usernamePassword(credentialsId: 'dockerhub', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
+                 sh "echo $PASS | docker login -u $USER --password-stdin"
+                 sh 'docker push balu777kb/medicureimg'
 
-             sh 'docker push myimage/medicureimgaddbook:latest'
+             sh 'docker push medicureimg/medicureimgaddbook:latest'
                 }
             }
         }
         stage('Deploy') {
             steps {
-                    sh 'docker run -itd --name medicure -p 80:8082 myimage/medicureimgaddbook:latest'
+                    sh 'docker run -itd --name medicure -p 80:8082 medicureimg/medicureimgaddbook:latest'
                 }
             }
     }
