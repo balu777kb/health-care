@@ -15,7 +15,7 @@ pipeline {
         stage('Build Image') {
             steps {
                 sh 'docker build -t medicureimg .'
-                sh 'docker tag medicureimg:latest techomaniac83/medicureimgaddbook:latest'
+                sh 'docker tag medicureimg:latest myimage/medicureimgaddbook:latest'
             }
         }
 
@@ -23,13 +23,13 @@ pipeline {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'balu777kb', passwordVariable: '9705979634@kB', usernameVariable: 'USER')]) {
                     sh "echo \$PASS | docker login -u \$USER --password-stdin"
-                    sh 'docker push techomaniac83/medicureimgaddbook:latest'
+                    sh 'docker push myimage/medicureimgaddbook:latest'
                 }
             }
         }
         stage('Deploy') {
             steps {
-                    sh 'docker run -itd --name medicure -p 80:8082 techomaniac83/medicureimgaddbook:latest'
+                    sh 'docker run -itd --name medicure -p 80:8082 myimage/medicureimgaddbook:latest'
                 }
             }
     }
