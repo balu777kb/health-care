@@ -11,17 +11,10 @@ pipeline {
                 sh "mvn clean package"
             }
         }
-      stage('Build Image'){
-          steps{
-              sh 'docker build -t healthimg .'
-              sh 'docker tag healthimg:balu777kb/healthimgbook'
-          }
-       }
       stage('Docker login and push'){
           steps{
              withCredentials([usernamePassword(CredentialsId: 'docker',passwordVariable: 'PASS',usernameVariable: 'USER')]){
                  sh "echo \$PASS | docker login -u \$USER --password-stdin"
-                 sh 'docker push balu777kb/healthimgbook'
                  }
             }
         }
