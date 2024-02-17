@@ -22,7 +22,7 @@ pipeline {
         }
         stage('push image') {
             steps{
-                sh 'docker push balu777kb/src:$BUILD_NUMBER .'
+                sh 'docker push balu777kb/demo .'
             }
         }
 }
