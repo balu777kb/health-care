@@ -10,6 +10,12 @@ pipeline {
             steps {
                 sh "mvn clean package"
             }
-        } 
+        }
+       stage('Build docker image') {
+            steps {  
+                sh 'docker build -t demo .'
+                sh 'docker tag demo:latest balu777kb/demo1:latest'
+            }
+        }
    }
 }
