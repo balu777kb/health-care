@@ -1,12 +1,12 @@
 pipeline {
-    agent any 
-     environment {
+    agent any
+    environment {
     DOCKERHUB_CREDENTIALS = credentials('docker')
     }
     stages { 
         stage('SCM Checkout') {
             steps{
-            git 'https://github.com/balu777kb/health-care.git'
+            git 'https://github.com/balu777kb/insurance-project.git'
             }
         }
         stage('Build') {
@@ -14,13 +14,13 @@ pipeline {
                 sh "mvn clean package"
             }
         }
-       stage('Build docker image') {
+        stage('Build docker image') {
             steps {  
-                sh 'docker build -t demo .'
-                sh 'docker tag demo:latest balu777kb/demo1:latest'
+                sh 'docker build -t insure .'
+                sh 'docker tag insure:latest balu777kb/insurance12:latest'
             }
         }
-       stage('login to dockerhub') {
+        stage('login to dockerhub') {
             steps{
                 sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
             }
