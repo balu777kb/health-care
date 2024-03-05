@@ -128,8 +128,8 @@ resource "aws_eip" "proj-eip" {
 resource "aws_instance" "Prod-Server" {
  ami = "ami-0ef82eeba2c7a0eeb"
  instance_type = "t2.micro"
- availability_zone = "ap-south-1b"
- key_name = "chefkeypair"
+ availability_zone = "ap-south-2b"
+ key_name = "Health"
  network_interface {
  device_index = 0
  network_interface_id = aws_network_interface.proj-ni.id
